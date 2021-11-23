@@ -2,7 +2,7 @@ package WinBuilder;
 
 import java.sql.*;
 
-public class User {
+public class Customer {
 
     public static void main(String[] args) {
         try{ 
