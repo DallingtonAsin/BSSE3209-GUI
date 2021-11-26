@@ -1,48 +1,20 @@
 package WinBuilder;
 
-import java.sql.*;
-
 public class Customer {
+	String firstname, lastname, gender, address, mobile_no, occupation, dob, account_no;
+	double account_balance;
 
-	public static void main(String[] args) {
-		
-		try { 
+	
+	 Customer(String fname, String lname, String address, String gender, String tel_no, String jobtitle, String  dob, String accountNo, double bal){
+		   this.firstname = lname;
+		   this.lastname = lname;
+		   this.gender = gender;
+		   this.address = address;
+		   this.mobile_no = tel_no;
+		   this.occupation = jobtitle;
+		   this.dob = dob;
+		   this.account_no = accountNo;
+		   this.account_balance = bal;
+	 }
 
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			//Class.forName("com.mysql.jdbc.Driver"); // this has been deprecated
-			String connectionString = "jdbc:mysql://localhost:3306/vms";
-			String db_username = "AfricaOne";
-			String db_password = "AfricaOne";
-
-			Connection con = DriverManager.getConnection(connectionString, db_username, db_password);  
-
-			Statement stmt=con.createStatement();  
-			ResultSet rs=stmt.executeQuery("select * from users");  
-			while(rs.next()) {
-
-				int id = rs.getInt("id");
-				String firstName = rs.getString("first_name");
-				String lastName = rs.getString("last_name");
-
-				String name = firstName+" "+lastName;
-				String username = rs.getString("username");
-				String telephone_no = rs.getString("mobile_no");
-				String gender = rs.getString("gender");
-
-
-				Date dateCreated = rs.getDate("created_at");
-				boolean isActive = rs.getBoolean("is_active");
-				int user_role = rs.getInt("role");
-
-				System.out.format("%s, %s, %s,%s, %s, %s, %s, %s, %s\n", 
-						id,firstName, lastName, dateCreated,
-						isActive, user_role, name, username,
-						telephone_no, gender);
-			}
-			con.close();  
-		}
-		catch(Exception e){ 
-			System.out.println(e);
-		}  
-	}  
 }
