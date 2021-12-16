@@ -2,21 +2,17 @@ package WinBuilder;
 
 import java.awt.EventQueue;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
 
 import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JRadioButton;
-import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.border.LineBorder;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.Random;
+import javax.swing.JComboBox;
+import javax.swing.border.LineBorder;
 
 public class RegistrationForm extends JFrame {
 
@@ -37,6 +33,9 @@ public class RegistrationForm extends JFrame {
 	private JTextField jobTextField;
 	private JLabel lblNewLabel_6;
 	private JButton btnCancel;
+	private JComboBox comboBox ;
+	private JRadioButton rdbtnFemale, rdbtnMale;
+	private ButtonGroup genderGroup;
 
 	
 	
@@ -70,7 +69,7 @@ public class RegistrationForm extends JFrame {
 	public RegistrationForm() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 506, 377);
+		setBounds(100, 100, 506, 473);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(SystemColor.window);
@@ -130,17 +129,22 @@ public class RegistrationForm extends JFrame {
 		contentPane.add(jobTextField);
 		
 		lblNewLabel_6 = new JLabel("Gender");
-		lblNewLabel_6.setBounds(39, 251, 62, 23);
+		lblNewLabel_6.setBounds(39, 298, 62, 23);
 		contentPane.add(lblNewLabel_6);
 		
-		
-		JRadioButton rdbtnFemale = new JRadioButton("Female");
-		rdbtnFemale.setBounds(117, 259, 88, 23);
+		genderGroup =new ButtonGroup(); 
+		 rdbtnFemale = new JRadioButton("Female");
+		 rdbtnFemale.setActionCommand("Female");
+		rdbtnFemale.setBounds(117, 297, 88, 23);
 		contentPane.add(rdbtnFemale);
 		
-		JRadioButton rdbtnMale = new JRadioButton("Male");
-		rdbtnMale.setBounds(216, 259, 141, 23);
+		rdbtnMale = new JRadioButton("Male");
+		rdbtnMale.setActionCommand("Male");
+		rdbtnMale.setBounds(200, 297, 141, 23);
 		contentPane.add(rdbtnMale);
+		
+		genderGroup.add(rdbtnMale);  
+		genderGroup.add(rdbtnFemale);  
 		
 
 		JButton btnNewButton = new JButton("SUBMIT");
@@ -150,26 +154,28 @@ public class RegistrationForm extends JFrame {
 				String firstname = fnameTextField.getText().toString();
 				String lastname = lnameTextField.getText().toString();
 				String address = addressTextField.getText().toString();
-				String gender = "Male";
 				String telephone = telTextField.getText().toString();
 				String occupation = jobTextField.getText().toString();
+				String nationality = String.valueOf(comboBox.getSelectedItem());
 				String dob = "12/12/1934";
+				String gender = genderGroup.getSelection().getActionCommand();
 				Random random = new Random();
 				String account_no = String.valueOf(random.nextInt(10000000));
 				double balance = 0;
+			
 				
-				Customer cust = new Customer(firstname, lastname, address, gender, telephone, occupation, dob, account_no, balance);
-				DbHandler handler = new DbHandler();
-				boolean res = handler.register(cust);
-				if(java.util.Objects.equals(res, true)) {
-					 Reset();
-					JOptionPane.showMessageDialog(null, "Customer "+firstname+" "+lastname+" registered successfully");
-				}else {
-					JOptionPane.showMessageDialog(null, "Oops, unable to create customer!");
-				}
+//				Customer cust = new Customer(firstname, lastname, address, gender, telephone, occupation, dob, account_no, balance);
+//				DbHandler handler = new DbHandler();
+//				boolean res = handler.register(cust);
+//				if(java.util.Objects.equals(res, true)) {
+//					 Reset();
+//					JOptionPane.showMessageDialog(null, "Customer "+firstname+" "+lastname+" registered successfully");
+//				}else {
+//					JOptionPane.showMessageDialog(null, "Oops, unable to create customer!");
+//				}
 				
-				System.out.format("%s, %s, %s, %s, %s, %s", firstname, lastname, address, telephone, occupation, gender);
-				
+				System.out.format("%s, %s, %s, %s, %s,%s, %s", firstname, lastname, address, telephone, occupation, nationality, gender);
+				System.exit(0);
 			}
 		});
 		
@@ -178,7 +184,7 @@ public class RegistrationForm extends JFrame {
 		btnNewButton.setFont(new Font("Lucida Grande", Font.BOLD, 13));
 		btnNewButton.setForeground(Color.BLUE);
 		btnNewButton.setBackground(Color.BLACK);
-		btnNewButton.setBounds(117, 297, 117, 29);
+		btnNewButton.setBounds(117, 371, 117, 29);
 		contentPane.add(btnNewButton);
 		
 		btnCancel = new JButton("CANCEL");
@@ -189,7 +195,18 @@ public class RegistrationForm extends JFrame {
 		});
 		btnCancel.setForeground(Color.RED);
 		btnCancel.setBackground(Color.BLACK);
-		btnCancel.setBounds(240, 297, 117, 29);
+		btnCancel.setBounds(246, 371, 117, 29);
 		contentPane.add(btnCancel);
+		
+		String nationalities[] = { "Ugandan", "Other" };
+		comboBox = new JComboBox(nationalities);
+		comboBox.setSelectedIndex(1);
+		 
+		comboBox.setBounds(117, 259, 215, 27);
+		contentPane.add(comboBox);
+		
+		JLabel lblNewLabel_5_1 = new JLabel("Nationality");
+		lblNewLabel_5_1.setBounds(39, 260, 76, 23);
+		contentPane.add(lblNewLabel_5_1);
 	}
 }
